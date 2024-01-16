@@ -7,7 +7,7 @@ CUT&RUN-Flow was built by using Nextflow, a powerful domain-specific workflow la
 The pipeline is built using Nextflow, a workflow tool to run tasks across multiple compute infrastructures in a portable, reproducible manner. It is capable of using containerisation and package management making installation trivial and results highly reproducible. The Nextflow DSL2 implementation of this pipeline uses one container per process, which makes it easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from nf-core/modules.
 
 The pipeline has been developed with continuous integration (CI) and test driven development (TDD) at its core. nf-core code and module linting as well as a battery of over 100 unit and integration tests run on pull request to the main repository and on release of the pipeline. On official release, automated CI tests run the pipeline on a full-sized dataset on AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the nf-core website.
-## cutandrun flow diagram
+## Cutandrun flow diagram
 The following flow diagram is a flow of running cutandrun by performing nextflow:
 ![Cutandrun flow diagram](https://github.com/nf-core/cutandrun/blob/master/docs/images/cutandrun-flow-diagram-v3.0.png)
  
@@ -44,7 +44,7 @@ Another way is to install nextflow in base environment in your Linux server acco
 (base) [yxt477@scccbbsr Yuande]$conda install -c bioconda nextflow
 ```
 You don't need to install cutandrun pipeline because cutandrun pipeline was installed in nextflow when nextflow is installed.
-## cutandRun pipeline provides the following performing 16 processes or tools:
+## CutandRun pipeline provides the following performing 16 processes or tools:
 
 1. Merge re-sequenced FastQ files([cat](cat))
 
@@ -86,7 +86,7 @@ group,replicate,fastq_1,fastq_2,control
 S90,1,/data1/Yuande/DNA_cutandrun/data2/S90_R1_001.fastq.gz,/data1/Yuande/DNA_cutandrun/data2/S90_R2_001.fastq.gz,FOXA1
 FOXA1,1,/data1/Yuande/DNA_cutandrun/data2/S89_R1_001.fastq.gz,/data1/Yuande/DNA_cutandrun/data2/S89_R2_001.fastq.gz,
 ```
-The first column in samplesheet.csv is group. Here S90 is name of group in which there may be one or multiple cutandrun samples. You may use the other group name. A group is  an antibody. An experiment may have multiple antibodies. Each antibody has a control. In group column, each control is named by antibody. In cotrol column, cutandrun samples cut and run by antibody lists their antibodies. Control samples in control column list empty. So, in control column in the above samplesheet.csv, FOXA1 is for S90_R2_001.fastq.gz and empty is for S89_R2_001.fastq.gz. The second column is replicate, if an sample has multiple replicates, then arabic numbers are given for these replicates, for example, three samples, one can use 1 for the first sample,2 for the second one, and 3 for the third one. The columns 3 and 4 are fastq_1,fastq_2 for paired-end fastqs of DNA-seq. One must give physical path for each fastq. 
+The first column in samplesheet.csv is group. Here S90 is name of group in which there may be one or multiple cutandrun samples. You may use the other group name. A group is  an antibody. An experiment may have multiple antibodies. Each antibody has a control. In group column, each control is named by antibody. In cotrol column, cutandrun samples cut and run by antibody lists their antibodies. Control samples in control column list empty. So, in control column in the above samplesheet.csv, FOXA1 is for S90_R2_001.fastq.gz and empty is for S89_R2_001.fastq.gz. The second column is replicate, if an sample has multiple replicates, then arabic numbers are given for these replicates, for example, we suppose that three replicates are designed for an antiboy, "1" is specified to the first replicate,"2" to the second one, and 3 to the third one. The columns 3 and 4 are fastq_1,fastq_2 for paired-end fastqs of DNA-seq. One must give physical path for each fastq. For single-end fastq, then fastq_2 is given to empty. The following table describes each column in the samplesheet.csv
 |column |Description                                |
 |-------|-------------------------------------------|
 |group  |Group identifier for sample. This will be identical for replicate samples from the same experimental group.|
@@ -102,8 +102,8 @@ One can use bash list to build samplesheet.csv under data folder:
 ```
 Use vim to add physical path (/data1/Yuande/DNA_cutandrun/data2/) to each fastq data.
 
-## build nextflow commandline
-Use vim to build nextflow commandline to perform cutandrun pipeline. Here is bash file  run_nextflow_DNA_cutandrun2.sh to run nf-cutandrun where the commandline is
+## Build nextflow commandline
+Use vim to build nextflow commandline to perform cutandrun pipeline. Here is bash file  "run_nextflow_DNA_cutandrun2.sh" to run nf-core/cutandrun where the commandline is
 ```
 #!/bin/bash
 cd /data1/Yuande/DNA_cutandrun/
@@ -111,7 +111,7 @@ cd /data1/Yuande/DNA_cutandrun/
 nextflow run nf-core/cutandrun -r 3.1 --input sample_infor3.csv --peakcaller 'seacr,MACS2' --genome GRCh38 --outdir result3 -profile docker
 ```
 In this bash file, we use docker for saving image files and log files. The flog is "-profile". In our Linux server system, docker was installed. In pegasus (PHC) system, docker is not permised but one can use singularity to replace docker. In nf-core there are old version cutandrun 3.1 and the last version. The last cutandrun version is not available, so we use 3.1 version. Put samplesheet.csv after --input. Use seacr, MACS2 to do peak calling. Use GRCh38 as reference genome. Set outdir aname as result3 or nexflow_result under specified director folder.
-## run nextflow commandline
+## To run nextflow commandline
 Give bash file a permission by chemod:
 ```
 $ chemod 755 run_nextflow_DNA_cutandrun2.sh
