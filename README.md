@@ -120,3 +120,18 @@ Then run run_nextflow_DNA_cutandrun2.sh under current director folder:
 ```
 ./run_nextflow_DNA_cutandrun2.sh
 ```
+## Output files
+Cutandrun would output 5 director folders: 
+
+01_prealign  
+
+02_alignment  
+
+03_peak_calling  
+
+04_reporting  
+
+pipeline_info
+
+01_prealign has two subfolders: pretrim_fastqc and trimgalore. All fastqc.zip files are saved in pretrim_fastqc. consensus_upset_plots,  deeptools_heatmaps,  deeptools_qc,  igv,  multiqc, and  preseq are saved in 04_reporting. One can review multiqc_report.html in  multiqc folder. The multiqc_report.html shows all fastqc plots online. ComputeMatrix.vals.mat.tab,  lotHeatmap.mat.tab, and  plotHeatmap.pdf files can be found in 04_reporting/deeptools_heatmaps/peaks. In 03_peak_calling folder, you can find 01_bam_to_bedgraph  02_clip_bed,  03_bed_to_bigwig,  04_called_peaks,  05_consensus_peaks,  06_fragments_from_bams subfolders. 
+
