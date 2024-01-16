@@ -8,10 +8,11 @@ The pipeline is built using Nextflow, a workflow tool to run tasks across multip
 
 The pipeline has been developed with continuous integration (CI) and test driven development (TDD) at its core. nf-core code and module linting as well as a battery of over 100 unit and integration tests run on pull request to the main repository and on release of the pipeline. On official release, automated CI tests run the pipeline on a full-sized dataset on AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources. The results obtained from the full-sized test can be viewed on the nf-core website.
 ## cutandrun flow diagram
+The following flow diagram is a flow of running cutandrun by performing nextflow:
 ![Cutandrun flow diagram](https://github.com/nf-core/cutandrun/blob/master/docs/images/cutandrun-flow-diagram-v3.0.png)
  
 ## Install nextflow with conda 
-1. create evironment with python 2.7 in Linux server such as scccbbsr.cgcent. If Linux server does not install anaconda, then you need to download  Miniconda3-latest-Linux-x86_64.sh:
+1. Create evironment with python 2.7 in Linux server such as scccbbsr.cgcent. If Linux server does not install anaconda, then you need to download  Miniconda3-latest-Linux-x86_64.sh:
  ```  
    $ mkdir -p ~/miniconda3
    
@@ -42,45 +43,44 @@ Another way is to install nextflow in base environment in your Linux server acco
 ```
 (base) [yxt477@scccbbsr Yuande]$conda install -c bioconda nextflow
 ```
-You don't install cutandrun pipeline because cutandrun pipeline was installed in nextflow when installed nextflow.
-## cutandRun pipeline provides the following processes:
-Check input files
+You don't need to install cutandrun pipeline because cutandrun pipeline was installed in nextflow when nextflow is installed.
+## cutandRun pipeline provides the following performing 16 processes or tools:
 
-1.Merge re-sequenced FastQ files([cat](cat))
+1. Merge re-sequenced FastQ files([cat](cat))
 
-2.Read QC([FastQC](FastQC))
+2. Read QC([FastQC](FastQC))
 
-3.Adapter and quality trimming([Trim Galore!](TrimGalore!))
+3. Adapter and quality trimming([Trim Galore!](TrimGalore!))
 
-4.Alignment to both target and spike-in genomes([Bowtie2](Bowtie2))
+4. Alignment to both target and spike-in genomes([Bowtie2](Bowtie2))
 
-5.Filter on quality, sort and index alignments([samtools](samtools))
+5. Filter on quality, sort and index alignments([samtools](samtools))
 
-6.Duplicate read marking ([picard](picard))
+6. Duplicate read marking ([picard](picard))
 
-7.Create bedGraph files ([bedtools](bedtools))
+7. Create bedGraph files ([bedtools](bedtools))
 
-8.Create bigWig coverage files ([bedGraphToBigWig](bedGraphToBigWig))
+8. Create bigWig coverage files ([bedGraphToBigWig](bedGraphToBigWig))
 
-9.Peak calling ([SEACR](SEACR), [MACS2](MACS2))
+9. Peak calling ([SEACR](SEACR), [MACS2](MACS2))
 
-10.Consensus peak merging and reporting ([bedtools](bedtools))
+10. Consensus peak merging and reporting ([bedtools](bedtools))
 
-11.Library complexity ([preseq](preseq)(Preseq | The Smith Lab))
+11. Library complexity ([preseq](preseq)(Preseq | The Smith Lab))
 
-12.Fragment-based quality control ([deepTools](deepTools))
+12. Fragment-based quality control ([deepTools](deepTools))
 
-13.Peak-based quality control ([bedtools](bedtools), custom python)
+13. Peak-based quality control ([bedtools](bedtools), custom python)
 
-14.Heatmap peak analysis ([deepTools](deepTools))
+14. Heatmap peak analysis ([deepTools](deepTools))
 
-15.Genome browser session ([IGV](IGV))
+15. Genome browser session ([IGV](IGV))
 
-16.Present all QC in web-based report ([MultiQC](MultiQC))
+16. Present all QC in web-based report ([MultiQC](MultiQC))
 
-## sample sheet
+## Make sample sheet with csv format
 
-After that, you need make an samplesheet.csv. I provides an example to make the samplesheet.csv where the title must be "group,replicate,fastq_1,fastq_2,control" and data need physical paths. 
+After that, you need make an samplesheet.csv. Here an example is a templet to make the samplesheet.csv where the column title must be group,replicate,fastq_1,fastq_2,control. 
 ```
 group,replicate,fastq_1,fastq_2,control
 S90,1,/data1/Yuande/DNA_cutandrun/data2/S90_R1_001.fastq.gz,/data1/Yuande/DNA_cutandrun/data2/S90_R2_001.fastq.gz,FOXA1
@@ -100,7 +100,7 @@ One can use bash list to build samplesheet.csv under data folder:
 ```
 (base) [yxt477@scccbbsr data]$ ls > samplesheet.csv 
 ```
-Use vim to add physical path to each fasq data.
+Use vim to add physical path (/data1/Yuande/DNA_cutandrun/data2/) to each fastq data.
 
 ## build nextflow commandline
 Use vim to build nextflow commandline to perform cutandrun pipeline. Here is bash file  run_nextflow_DNA_cutandrun2.sh to run nf-cutandrun where the commandline is
